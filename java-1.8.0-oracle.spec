@@ -33,7 +33,7 @@
 %define origin          oracle
 %define javaver         1.8.0
 %define cvsver          8
-%define buildver        66
+%define buildver        71
 %define tzversion       2_0_0-2015a
 # Note: when buildver reaches 3 digits, drop a zero from the priority so
 # that the priority number remains 6 digits
@@ -861,6 +861,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Fri Jan 22 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.71-1
+- update to 71
+
 * Thu Oct 22 2015 Jaroslaw Polok <jaroslaw.polok@cern.ch> - 1:1.8.0.66-1
 - update to 66
 
