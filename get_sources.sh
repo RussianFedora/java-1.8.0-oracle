@@ -13,7 +13,7 @@ COOKIE="gpw_e24=x; oraclelicense=accept-securebackup-cookie"
 #B=17
 #wget --header="Cookie: $COOKIE" http://download.oracle.com/otn-pub/java/jdk/8u$U-b$B/jdk-8u$U-linux-x64.tar.gz
 
-U=77
-B=03
+U=92
+B=14
 curl -sLJO -H "Cookie: $COOKIE" http://download.oracle.com/otn-pub/java/jdk/8u$U-b$B/jdk-8u$U-linux-x64.tar.gz
 curl -sLJO -H "Cookie: $COOKIE" http://download.oracle.com/otn-pub/java/jdk/8u$U-b$B/jdk-8u$U-linux-i586.tar.gz
