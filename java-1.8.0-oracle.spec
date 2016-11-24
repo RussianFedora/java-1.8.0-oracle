@@ -841,8 +841,9 @@ fi
 %{_mandir}/man1/javaws-%{name}.%{_arch}.1*
 
 %files javafx
-%{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-53.so
-%{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-54.so
+%{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-55.so
+%{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-56.so
+%{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-ffmpeg-56.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libdecora_sse.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libfxplugins.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libglass.so
