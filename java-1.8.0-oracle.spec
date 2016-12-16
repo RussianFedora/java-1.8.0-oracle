@@ -33,7 +33,7 @@
 %define origin          oracle
 %define javaver         1.8.0
 %define cvsver          8
-%define buildver        111
+%define buildver        112
 %define tzversion       2_0_0-2015a
 # Note: when buildver reaches 3 digits, drop a zero from the priority so
 # that the priority number remains 6 digits
@@ -227,23 +227,47 @@ Requires:       %{name} = %{version}-%{release}
 
 # This is very bad workaround, but nothing help
 %ifarch x86_64
+Provides:	libavcodec-ffmpeg.so.56()(64bit)
+Provides:	libavcodec-ffmpeg.so.56(LIBAVCODEC_FFMPEG_56)(64bit)
 Provides:	libavcodec.so.53()(64bit)
 Provides:	libavcodec.so.53(LIBAVCODEC_53)(64bit)
 Provides:	libavcodec.so.54()(64bit)
 Provides:	libavcodec.so.54(LIBAVCODEC_54)(64bit)
+Provides:	libavcodec.so.55()(64bit)
+Provides:	libavcodec.so.55(LIBAVCODEC_55)(64bit)
+Provides:	libavcodec.so.56()(64bit)
+Provides:	libavcodec.so.56(LIBAVCODEC_56)(64bit)
+Provides:	libavformat-ffmpeg.so.56()(64bit)
+Provides:	libavformat-ffmpeg.so.56(LIBAVFORMAT_FFMPEG_56)(64bit)
 Provides:	libavformat.so.53()(64bit)
 Provides:	libavformat.so.53(LIBAVFORMAT_53)(64bit)
 Provides:	libavformat.so.54()(64bit)
 Provides:	libavformat.so.54(LIBAVFORMAT_54)(64bit)
+Provides:	libavformat.so.55()(64bit)
+Provides:	libavformat.so.55(LIBAVFORMAT_55)(64bit)
+Provides:	libavformat.so.56()(64bit)
+Provides:	libavformat.so.56(LIBAVFORMAT_56)(64bit)
 %else
+Provides:	libavcodec-ffmpeg.so.56
+Provides:	libavcodec-ffmpeg.so.56(LIBAVCODEC_FFMPEG_56)
 Provides:	libavcodec.so.53
 Provides:	libavcodec.so.53(LIBAVCODEC_53)
 Provides:	libavcodec.so.54
 Provides:	libavcodec.so.54(LIBAVCODEC_54)
+Provides:	libavcodec.so.55
+Provides:	libavcodec.so.55(LIBAVCODEC_55)
+Provides:	libavcodec.so.56
+Provides:	libavcodec.so.56(LIBAVCODEC_56)
+Provides:	libavformat-ffmpeg.so.56
+Provides:	libavformat-ffmpeg.so.56(LIBAVFORMAT_FFMPEG_56)
 Provides:	libavformat.so.53
 Provides:	libavformat.so.53(LIBAVFORMAT_53)
 Provides:	libavformat.so.54
 Provides:	libavformat.so.54(LIBAVFORMAT_54)
+Provides:	libavformat.so.55
+Provides:	libavformat.so.55(LIBAVFORMAT_55)
+Provides:	libavformat.so.56
+Provides:	libavformat.so.56(LIBAVFORMAT_56)
 %endif
 
 %description	javafx
@@ -861,8 +885,11 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Fri Dec 16 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.112-1.R
+- update to 112
+
 * Thu Nov 24 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.111-1.R
-0 update to 111
+- update to 111
 
 * Tue Jun  7 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.92-1.R
 - update to 92
