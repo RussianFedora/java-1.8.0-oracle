@@ -885,7 +885,7 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
-* Tue Apr 16 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.121-1.R
+* Tue Apr 16 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.121-1.R
 - update to 121
 
 * Fri Dec 16 2016 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.112-1.R
