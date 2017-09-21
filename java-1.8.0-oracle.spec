@@ -60,6 +60,7 @@
 %define multi_suffix    .x86_64
 %endif
 
+%define _jvmjardir      %{_jvmdir}-exports
 %define sdklnk          java-%{javaver}-%{origin}%{multi_suffix}
 %define jrelnk          jre-%{javaver}-%{origin}%{multi_suffix}
 %define sdkdir          %{name}-%{version}%{multi_suffix}
