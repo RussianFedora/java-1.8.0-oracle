@@ -1,8 +1,8 @@
 COOKIE="oraclelicense=accept-securebackup-cookie"
 
-U=121
-B=13
+U=144
+B=01
 
-curl -sLJO -b "$COOKIE" http://download.oracle.com/otn-pub/java/jdk/8u$U-b$B/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u$U-linux-i586.tar.gz
-curl -sLJO -b "$COOKIE" http://download.oracle.com/otn-pub/java/jdk/8u$U-b$B/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u$U-linux-x64.tar.gz
+curl -LJO -b "$COOKIE" http://download.oracle.com/otn-pub/java/jdk/8u$U-b$B/090f390dda5b47b9b721c7dfaa008135/jdk-8u$U-linux-i586.tar.gz
+curl -LJO -b "$COOKIE" http://download.oracle.com/otn-pub/java/jdk/8u$U-b$B/090f390dda5b47b9b721c7dfaa008135/jdk-8u$U-linux-x64.tar.gz
 
