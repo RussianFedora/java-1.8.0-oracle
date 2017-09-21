@@ -888,6 +888,9 @@ fi
 * Thu Sep 21 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.144-1.R
 - update to 144
 
+* Wed Apr 19 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.131-1.R
+- udpate to 131
+
 * Tue Apr  4 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.121-1.R
 - update to 121
 
