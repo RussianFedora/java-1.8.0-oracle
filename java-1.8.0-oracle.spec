@@ -33,7 +33,7 @@
 %define origin          oracle
 %define javaver         1.8.0
 %define cvsver          8
-%define buildver        144
+%define buildver        152
 %define tzversion       2_0_0-2015a
 # Note: when buildver reaches 3 digits, drop a zero from the priority so
 # that the priority number remains 6 digits
@@ -886,6 +886,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Thu Oct 26 2017 Jonathan G. Underwood <jonathan.underwood@gmail.com> - 1:1.8.0.152-1.R
+- update to 152
+
 * Thu Sep 21 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.144-1.R
 - update to 144
 
