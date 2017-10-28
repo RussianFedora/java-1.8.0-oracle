@@ -33,7 +33,7 @@
 %define origin          oracle
 %define javaver         1.8.0
 %define cvsver          8
-%define buildver        144
+%define buildver        152
 %define tzversion       2_0_0-2015a
 # Note: when buildver reaches 3 digits, drop a zero from the priority so
 # that the priority number remains 6 digits
@@ -316,8 +316,6 @@ find . \( -name '*.properties' -o -name '*.xml' \) -print0 | xargs -0 chmod -x
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 # fix up ControlPanel APPHOME and bin locations
 perl -p -i -e 's|APPHOME=.*|APPHOME=%{_jvmdir}/%{jredir}|' jre/bin/ControlPanel
 perl -p -i -e 's|/usr/bin/||g' jre/bin/ControlPanel
@@ -367,15 +365,6 @@ install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/endorsed
 
 # fix up extensions symlinks
 symlinks -cs $RPM_BUILD_ROOT%{jvmjardir}
-
-# jce policy file handling
-install -d -m 755 $RPM_BUILD_ROOT%{_jvmprivdir}/%{policydir}/jce/vanilla
-for file in local_policy.jar US_export_policy.jar; do
-  mv $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security/$file \
-    $RPM_BUILD_ROOT%{_jvmprivdir}/%{policydir}/jce/vanilla
-  # for ghosts
-  touch $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/security/$file
-done
 
 # versionless symlinks
 pushd $RPM_BUILD_ROOT%{_jvmdir}
@@ -440,9 +429,6 @@ done
 # make placeholder directory for plugin
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %post
 update-desktop-database %{_datadir}/applications &> /dev/null || :
 exit 0
@@ -481,22 +467,6 @@ update-alternatives --install %{_jvmdir}/jre-%{origin} jre_%{origin} %{_jvmdir}/
 
 update-alternatives --install %{_jvmdir}/jre-%{javaver} jre_%{javaver} %{_jvmdir}/%{jrelnk} %{priority} \
 --slave %{_jvmjardir}/jre-%{javaver}       jre_%{javaver}_exports      %{_jvmjardir}/%{jrelnk}
-
-if [ -d %{_jvmdir}/%{jrelnk}/lib/security ]; then
-  # Need to remove the old jars in order to support upgrading, ugly :(
-  # update-alternatives fails silently if the link targets exist as files.
-  rm -f %{_jvmdir}/%{jrelnk}/lib/security/{local,US_export}_policy.jar
-fi
-update-alternatives \
-  --install \
-    %{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar \
-    jce_%{javaver}_%{origin}_local_policy%{multi_suffix} \
-    %{_jvmprivdir}/%{policydir}/jce/vanilla/local_policy.jar \
-    %{priority} \
-  --slave \
-    %{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar \
-    jce_%{javaver}_%{origin}_us_export_policy%{multi_suffix} \
-    %{_jvmprivdir}/%{policydir}/jce/vanilla/US_export_policy.jar
 
 # build classes.jsa
 %ifnarch x86_64
@@ -599,9 +569,6 @@ exit 0
 %postun headless
 if [ $1 -eq 0 ]; then
   update-alternatives --remove java %{jrebindir}/java
-  update-alternatives --remove \
-    jce_%{javaver}_%{origin}_local_policy%{multi_suffix} \
-    %{_jvmprivdir}/%{policydir}/jce/vanilla/local_policy.jar
   update-alternatives --remove jre_%{origin}  %{_jvmdir}/%{jrelnk}
   update-alternatives --remove jre_%{javaver} %{_jvmdir}/%{jrelnk}
 fi
@@ -786,13 +753,14 @@ fi
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.policy
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/java.security
 %config(noreplace) %{_jvmdir}/%{jredir}/lib/security/trusted.libraries
-%ghost %{_jvmdir}/%{jredir}/lib/security/local_policy.jar
-%ghost %{_jvmdir}/%{jredir}/lib/security/US_export_policy.jar
+%{_jvmdir}/%{jredir}/lib/security/policy/limited/US_export_policy.jar
+%{_jvmdir}/%{jredir}/lib/security/policy/limited/local_policy.jar
+%{_jvmdir}/%{jredir}/lib/security/policy/unlimited/US_export_policy.jar
+%{_jvmdir}/%{jredir}/lib/security/policy/unlimited/local_policy.jar
 %{_jvmdir}/%{jredir}/lib/tzdb.dat
 %{_jvmdir}/%{jrelnk}
 %{_jvmjardir}/%{jrelnk}
 %{_jvmjardir}/%{sdkdir}/
-%{_jvmprivdir}/%{policydir}/
 %{_mandir}/man1/java-%{name}.%{_arch}.1*
 %{_mandir}/man1/jjs-%{name}.%{_arch}.1*
 %{_mandir}/man1/keytool-%{name}.%{_arch}.1*
@@ -886,6 +854,12 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Sun Oct 29 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.152-1.R
+- update to 152
+- use bundled JCE policy and remove alternatives entry for JCE policy as 
+  jonathanunderwood said
+  (https://github.com/jonathanunderwood/java-1.8.0-oracle/commit/70d9db)
+
 * Thu Sep 21 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.144-1.R
 - update to 144
 
