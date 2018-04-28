@@ -33,7 +33,7 @@
 %define origin          oracle
 %define javaver         1.8.0
 %define cvsver          8
-%define buildver        152
+%define buildver        172
 %define tzversion       2_0_0-2015a
 # Note: when buildver reaches 3 digits, drop a zero from the priority so
 # that the priority number remains 6 digits
@@ -854,6 +854,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Sat Apr 28 2018 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.172-1.R
+- update to 172
+
 * Sun Oct 29 2017 Arkady L. Shane <ashejn@russianfedora.pro> - 1:1.8.0.152-1.R
 - update to 152
 - use bundled JCE policy and remove alternatives entry for JCE policy as 
