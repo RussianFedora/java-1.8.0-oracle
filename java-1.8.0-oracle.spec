@@ -88,7 +88,7 @@
 
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}%{?buildver:.%{buildver}}
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Oracle Java Runtime Environment
 License:        Oracle Corporation Binary Code License
 Group:          Development/Languages
@@ -239,7 +239,7 @@ Provides:	libavcodec.so.55(LIBAVCODEC_55)(64bit)
 Provides:	libavcodec.so.56()(64bit)
 Provides:	libavcodec.so.56(LIBAVCODEC_56)(64bit)
 Provides:	libavcodec.so.57()(64bit)
-Provides:	libavcodec.so.57(LIBAVCODEC_56)(64bit)
+Provides:	libavcodec.so.57(LIBAVCODEC_57)(64bit)
 Provides:	libavformat-ffmpeg.so.56()(64bit)
 Provides:	libavformat-ffmpeg.so.56(LIBAVFORMAT_FFMPEG_56)(64bit)
 Provides:	libavformat.so.53()(64bit)
@@ -251,7 +251,7 @@ Provides:	libavformat.so.55(LIBAVFORMAT_55)(64bit)
 Provides:	libavformat.so.56()(64bit)
 Provides:	libavformat.so.56(LIBAVFORMAT_56)(64bit)
 Provides:	libavformat.so.57()(64bit)
-Provides:	libavformat.so.57(LIBAVFORMAT_56)(64bit)
+Provides:	libavformat.so.57(LIBAVFORMAT_57)(64bit)
 %else
 Provides:	libavcodec-ffmpeg.so.56
 Provides:	libavcodec-ffmpeg.so.56(LIBAVCODEC_FFMPEG_56)
@@ -264,7 +264,7 @@ Provides:	libavcodec.so.55(LIBAVCODEC_55)
 Provides:	libavcodec.so.56
 Provides:	libavcodec.so.56(LIBAVCODEC_56)
 Provides:	libavcodec.so.57
-Provides:	libavcodec.so.57(LIBAVCODEC_56)
+Provides:	libavcodec.so.57(LIBAVCODEC_57)
 Provides:	libavformat-ffmpeg.so.56
 Provides:	libavformat-ffmpeg.so.56(LIBAVFORMAT_FFMPEG_56)
 Provides:	libavformat.so.53
@@ -276,7 +276,7 @@ Provides:	libavformat.so.55(LIBAVFORMAT_55)
 Provides:	libavformat.so.56
 Provides:	libavformat.so.56(LIBAVFORMAT_56)
 Provides:	libavformat.so.57
-Provides:	libavformat.so.57(LIBAVFORMAT_56)
+Provides:	libavformat.so.57(LIBAVFORMAT_57)
 %endif
 
 %description	javafx
