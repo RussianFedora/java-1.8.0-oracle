@@ -73,10 +73,10 @@
 %define javaplugin      libjavaplugin.so%{multi_suffix}
 %define pluginname      %{_jvmdir}/%{jrelnk}/lib/%{archname}/libnpjp2.so
 
+%if 0%{?fedora} < 28
 # Avoid RPM 4.2+'s internal dep generator, it may produce bogus
 # Provides/Requires here.
-%if 0%{?fedora} >= 28
-%define _use_internal_dependency_generator 1
+%define _use_internal_dependency_generator 0
 %endif
 
 # This prevents aggressive stripping.
@@ -90,7 +90,7 @@
 
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}%{?buildver:.%{buildver}}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Oracle Java Runtime Environment
 License:        Oracle Corporation Binary Code License
 Group:          Development/Languages
@@ -864,6 +864,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Sun Aug 19 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-2.R
+- Re-enable rpm internal dependency generator on Fedora >= 28
+
 * Sun Aug 19 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-1.R
 - update to 181
 
