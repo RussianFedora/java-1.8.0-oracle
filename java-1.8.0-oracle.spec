@@ -75,7 +75,9 @@
 
 # Avoid RPM 4.2+'s internal dep generator, it may produce bogus
 # Provides/Requires here.
-%define _use_internal_dependency_generator 0
+%if 0%{?fedora} >= 28
+%define _use_internal_dependency_generator 1
+%endif
 
 # This prevents aggressive stripping.
 %define debug_package %{nil}
