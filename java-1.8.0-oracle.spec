@@ -35,9 +35,11 @@
 %define cvsver          8
 %define buildver        181
 %define tzversion       2_0_0-2015a
-# Note: when buildver reaches 3 digits, drop a zero from the priority so
-# that the priority number remains 6 digits
-%define priority        1800%{?buildver}%{!?buildver:00}
+# Note: priority should be six digits. So we adjust this according to
+# how many digits buildver is. If buildver is two digits we use
+# 1800%%{?buildver}%%{!?buildver:00} and if it is 3 digits we use
+# 180%%{?buildver}%%{!?buildver:000}
+%define priority        180%{?buildver}%{!?buildver:000}
 %define tzupdate        0
 %define jpp_epoch       1
 
@@ -90,7 +92,7 @@
 
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}%{?buildver:.%{buildver}}
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Oracle Java Runtime Environment
 License:        Oracle Corporation Binary Code License
 Group:          Development/Languages
@@ -864,6 +866,9 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Mon Aug 20 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-3.R
+- Fix alternatives priority to be 6 digits
+
 * Sun Aug 19 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-2.R
 - Re-enable rpm internal dependency generator on Fedora >= 28
 
