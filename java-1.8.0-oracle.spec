@@ -418,13 +418,13 @@ cat >> %{name}-javaws%{multi_suffix}.desktop << EOF
 Encoding=UTF-8
 Name=Oracle Java 8 Web Start (%{target_cpu})
 Comment=Java Application Launcher
-Exec=%{_jvmdir}/%{jredir}/bin/javaws
+Exec=%{_jvmdir}/%{jredir}/bin/javaws %u
 Icon=%{name}-javaws
 Terminal=false
 Type=Application
 NoDisplay=true
 Categories=Network;WebBrowser;X-Red-Hat-Base;
-MimeType=application/x-java-jnlp-file;
+MimeType=application/x-java-jnlp-file;x-scheme-handler/jnlp;x-scheme-handler/jnlps
 EOF
 /usr/bin/desktop-file-install \
    --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
@@ -616,10 +616,11 @@ update-alternatives --remove javaws %{jrebindir}/javaws
 sed -i 's|share/javaws|bin/javaws|g' %{_localstatedir}/lib/alternatives/%{javaplugin} 2>/dev/null
 
 # Add the current plugin, ControlPanel and javaws
-update-alternatives --install %{_libdir}/mozilla/plugins/libjavaplugin.so %{javaplugin} %{pluginname} %{priority} \
---slave %{_bindir}/ControlPanel            ControlPanel                %{jrebindir}/ControlPanel \
---slave %{_bindir}/javaws                  javaws                      %{jrebindir}/javaws \
---slave %{_mandir}/man1/javaws.1$ext       javaws.1$ext                %{_mandir}/man1/javaws-%{name}.%{_arch}.1$ext
+update-alternatives --install %{_libdir}/mozilla/plugins/libjavaplugin.so %{javaplugin} %{pluginname} %{priority}
+
+update-alternatives --install %{_bindir}/javaws javaws.%{_arch} %{jrebindir}/javaws %{priority} \
+                    --slave %{_bindir}/ControlPanel ControlPanel %{jrebindir}/ControlPanel \
+                    --slave %{_mandir}/man1/javaws.1$ext javaws.1$ext %{_mandir}/man1/javaws-%{name}.%{_arch}.1$ext
 
 # Complete cruft removal
 rm -f %{_datadir}/javaws
@@ -630,6 +631,7 @@ update-desktop-database %{_datadir}/applications >/dev/null 2>&1 || :
 
 if [ "$1" = "0" ]; then
     update-alternatives --remove %{javaplugin} %{pluginname}
+    update-alternatives --remove javaws.%{_arch} %{jrebindir}/javaws
 fi
 
 %files
@@ -868,6 +870,9 @@ fi
 * Mon Aug 20 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-3.R
 - Fix alternatives priority to be 6 digits
 - Drop files glob for javafx file list that included files twice
+- Fix desktop file for javaws
+- Add alternatives entry for javaws.noarch
+- Make use of alternatives for plugin more consistent with icedtea-web package
 
 * Sun Aug 19 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-2.R
 - Re-enable rpm internal dependency generator on Fedora >= 28
