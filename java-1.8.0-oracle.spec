@@ -847,7 +847,6 @@ fi
 
 %files javafx
 %{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-*.so
-%{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-ffmpeg-*.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libdecora_sse.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libfxplugins.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libglass.so
@@ -868,6 +867,7 @@ fi
 %changelog
 * Mon Aug 20 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-3.R
 - Fix alternatives priority to be 6 digits
+- Drop files glob for javafx file list that included files twice
 
 * Sun Aug 19 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-2.R
 - Re-enable rpm internal dependency generator on Fedora >= 28
