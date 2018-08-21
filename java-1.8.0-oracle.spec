@@ -35,9 +35,11 @@
 %define cvsver          8
 %define buildver        181
 %define tzversion       2_0_0-2015a
-# Note: when buildver reaches 3 digits, drop a zero from the priority so
-# that the priority number remains 6 digits
-%define priority        1800%{?buildver}%{!?buildver:00}
+# Note: priority should be six digits. So we adjust this according to
+# how many digits buildver is. If buildver is two digits we use
+# 1800%%{?buildver}%%{!?buildver:00} and if it is 3 digits we use
+# 180%%{?buildver}%%{!?buildver:000}
+%define priority        180%{?buildver}%{!?buildver:000}
 %define tzupdate        0
 %define jpp_epoch       1
 
@@ -73,10 +75,10 @@
 %define javaplugin      libjavaplugin.so%{multi_suffix}
 %define pluginname      %{_jvmdir}/%{jrelnk}/lib/%{archname}/libnpjp2.so
 
+%if 0%{?fedora} < 28
 # Avoid RPM 4.2+'s internal dep generator, it may produce bogus
 # Provides/Requires here.
-%if 0%{?fedora} >= 28
-%define _use_internal_dependency_generator 1
+%define _use_internal_dependency_generator 0
 %endif
 
 # This prevents aggressive stripping.
@@ -90,7 +92,7 @@
 
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}%{?buildver:.%{buildver}}
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Oracle Java Runtime Environment
 License:        Oracle Corporation Binary Code License
 Group:          Development/Languages
@@ -416,13 +418,13 @@ cat >> %{name}-javaws%{multi_suffix}.desktop << EOF
 Encoding=UTF-8
 Name=Oracle Java 8 Web Start (%{target_cpu})
 Comment=Java Application Launcher
-Exec=%{_jvmdir}/%{jredir}/bin/javaws
+Exec=%{_jvmdir}/%{jredir}/bin/javaws %u
 Icon=%{name}-javaws
 Terminal=false
 Type=Application
 NoDisplay=true
 Categories=Network;WebBrowser;X-Red-Hat-Base;
-MimeType=application/x-java-jnlp-file;
+MimeType=application/x-java-jnlp-file;x-scheme-handler/jnlp;x-scheme-handler/jnlps
 EOF
 /usr/bin/desktop-file-install \
    --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
@@ -614,10 +616,11 @@ update-alternatives --remove javaws %{jrebindir}/javaws
 sed -i 's|share/javaws|bin/javaws|g' %{_localstatedir}/lib/alternatives/%{javaplugin} 2>/dev/null
 
 # Add the current plugin, ControlPanel and javaws
-update-alternatives --install %{_libdir}/mozilla/plugins/libjavaplugin.so %{javaplugin} %{pluginname} %{priority} \
---slave %{_bindir}/ControlPanel            ControlPanel                %{jrebindir}/ControlPanel \
---slave %{_bindir}/javaws                  javaws                      %{jrebindir}/javaws \
---slave %{_mandir}/man1/javaws.1$ext       javaws.1$ext                %{_mandir}/man1/javaws-%{name}.%{_arch}.1$ext
+update-alternatives --install %{_libdir}/mozilla/plugins/libjavaplugin.so %{javaplugin} %{pluginname} %{priority}
+
+update-alternatives --install %{_bindir}/javaws javaws.%{_arch} %{jrebindir}/javaws %{priority} \
+                    --slave %{_bindir}/ControlPanel ControlPanel %{jrebindir}/ControlPanel \
+                    --slave %{_mandir}/man1/javaws.1$ext javaws.1$ext %{_mandir}/man1/javaws-%{name}.%{_arch}.1$ext
 
 # Complete cruft removal
 rm -f %{_datadir}/javaws
@@ -628,6 +631,7 @@ update-desktop-database %{_datadir}/applications >/dev/null 2>&1 || :
 
 if [ "$1" = "0" ]; then
     update-alternatives --remove %{javaplugin} %{pluginname}
+    update-alternatives --remove javaws.%{_arch} %{jrebindir}/javaws
 fi
 
 %files
@@ -845,7 +849,6 @@ fi
 
 %files javafx
 %{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-*.so
-%{_jvmdir}/%{jredir}/lib/%{archname}/libavplugin-ffmpeg-*.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libdecora_sse.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libfxplugins.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libglass.so
@@ -864,6 +867,16 @@ fi
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
 %changelog
+* Mon Aug 20 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-3.R
+- Fix alternatives priority to be 6 digits
+- Drop files glob for javafx file list that included files twice
+- Fix desktop file for javaws
+- Add alternatives entry for javaws.noarch
+- Make use of alternatives for plugin more consistent with icedtea-web package
+
+* Sun Aug 19 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-2.R
+- Re-enable rpm internal dependency generator on Fedora >= 28
+
 * Sun Aug 19 2018 Jonathan Underwoood <jonathan.underwood@gmail.com> - 1:1.8.0.181-1.R
 - update to 181
 
