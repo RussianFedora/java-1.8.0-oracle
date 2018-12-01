@@ -33,7 +33,7 @@
 %define origin          oracle
 %define javaver         1.8.0
 %define cvsver          8
-%define buildver        181
+%define buildver        192
 %define tzversion       2_0_0-2015a
 # Note: priority should be six digits. So we adjust this according to
 # how many digits buildver is. If buildver is two digits we use
@@ -92,7 +92,7 @@
 
 Name:           java-%{javaver}-%{origin}
 Version:        %{javaver}%{?buildver:.%{buildver}}
-Release:        3%{?dist}
+Release:        1%{?dist}
 Summary:        Oracle Java Runtime Environment
 License:        Oracle Corporation Binary Code License
 Group:          Development/Languages
@@ -863,6 +863,7 @@ fi
 %{_jvmdir}/%{jredir}/lib/%{archname}/libprism_common.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libprism_es2.so
 %{_jvmdir}/%{jredir}/lib/%{archname}/libprism_sw.so
+%{_jvmdir}/%{jredir}/lib/%{archname}/libglib-lite.so
 %{_jvmdir}/%{jredir}/lib/javafx.properties
 %{_jvmdir}/%{jredir}/lib/jfxswt.jar
 
